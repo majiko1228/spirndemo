@@ -1,36 +1,47 @@
 package cn.ndky.common;
 
-import cn.ndky.pojo.User;
+import cn.ndky.pojo.Menu;
 
-import javax.jws.soap.SOAPBinding;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Utils {
-    public static void main(String[] args) {
-        Map<String,Object> map = new HashMap<>();
 
-        List<User> users = new ArrayList<>();
+    /**
+     * 动态初始化左侧菜单
+     * @param menus
+     * @param menuMap
+     * @param map
+     * @return
+     */
+    public static Map<String,Object> initMenu(List<Menu> menus, Map<String,Object> menuMap, Map<String,Object> map){
+        for (Menu menu : menus) {
+            if(menu.getParentId() != 0){
+                for (Menu menu1 : menus) {
+                    if(menu.getParentId() == menu1.getPermId()){
+                        menu1.getChild().add(menu);
+                    }
+                }
+            }
+        }
 
-        User user1 = new User();
-        user1.setName("张三");
+        for (Menu menu : menus) {
+            if(menu.getChild().size() == 0){
+                menu.setChild(null);
+            }
+        }
 
-        User user2 = new User();
-        user2.setName("李四");
+        for (Menu menu : menus) {
+            if(menu.getParentId() == 0){
+                if(!menu.getDesc().equals("menuInfo")){
+                    menuMap.put(menu.getDesc(),menu);
+                }else{
+                    map.put("desktop",menu);
+                    menuMap.put(menu.getDesc(),map);
+                }
+            }
+        }
 
-        User user3 = new User();
-        user3.setName("王五");
-
-
-        users.add(user1);
-        users.add(user2);
-        users.add(user3);
-
-        map.put("用户管理",users);
-        System.out.println(map);
-
+        return menuMap;
     }
-
 }
