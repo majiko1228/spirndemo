@@ -149,9 +149,28 @@
         miniAdmin.render(options);
 
         $('.login-out').on("click", function () {
-            layer.msg('退出登录成功', function () {
-                window.location = 'page/login-1.html';
-            });
+            // layer.msg('退出登录成功', function () {
+            //     window.location = 'page/login-1.html';
+            // });
+            layer.confirm('是否注销？', {
+                    title:'提示',
+                    icon:3,
+                    btn:['确定','取消']
+                },function () {
+                    layer.closeAll('dialog');
+                    $.ajax({
+                        url:'/spindemo/logout',
+                        type:'post',
+                        success:function (data) {
+                            if(data.code == 200){
+                                location.href = "/spindemo/welcome"
+                            }
+                        }
+                    })
+                }
+            )
+
+
         });
     });
 </script>

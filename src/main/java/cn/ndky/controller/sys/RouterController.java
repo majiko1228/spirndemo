@@ -1,7 +1,13 @@
 package cn.ndky.controller.sys;
 
+import cn.ndky.common.Utils;
+import cn.ndky.common.status.RoleType;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * 页面跳转控制器
@@ -25,5 +31,34 @@ public class RouterController {
     @GetMapping("/index")
     public String index(){
         return "index";
+    }
+
+
+    /**
+     * 主页内容
+     * @return
+     */
+    @GetMapping("/indexContent")
+    public String indexContent(Model model, HttpSession session){
+        List<String> roles = Utils.getSessionUser(session).getRoles();
+        for (String role : roles) {
+            if(role.equals(RoleType.TEACHER.getRoleId())){
+                model.addAttribute("roleId",role);
+                break;
+            }else if(role.equals(RoleType.STUDENT.getRoleId())){
+                model.addAttribute("roleId",role);
+                break;
+            }else if(role.equals(RoleType.ADMIN.getRoleId())){
+                model.addAttribute("roleId",role);
+                break;
+            }
+        }
+        return "index-content";
+    }
+
+    // 跳转到课程管理表
+    @GetMapping("/teacher/courseManage")
+    public String course(){
+        return "teacher/course/course";
     }
 }

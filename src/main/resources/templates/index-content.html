@@ -7,8 +7,8 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" th:href="@{/layuimini/lib/layui-v2.5.4/css/layui.css}" media="all">
-    <link rel="stylesheet" th:href="@{/layuimini/lib/font-awesome-4.7.0/css/font-awesome.min.css}" media="all">
+    <link rel="stylesheet" th:href="@{/layuimini/lib/layui-v2.5.5/css/layui.css}" media="all">
+    <link rel="stylesheet" th:href="@{/layuimini/lib/font-awesome-4.7.0/css/font-awesome.css}" media="all">
     <link rel="stylesheet" th:href="@{/layuimini/css/public.css}" media="all">
     <style>
         .layui-card {border:1px solid #f2f2f2;border-radius:5px;}
@@ -71,10 +71,10 @@
                                 <div class="welcome-module">
                                     <div class="layui-row layui-col-space10">
                                         <div id="WELCOME_IMG" class="layui-col-md12 layui-anim layui-anim-scale" >
-                                            <img th:src="@{/my/img/welcome.png}" style="width: 100%" >
+                                            <img th:src="@{/layuimini/images/welcome.png}" style="width: 100%" >
                                         </div>
                                         <div class="layui-col-md6 layui-anim layui-anim-scale">
-                                            <img th:src="@{/my/img/user2.jpg}" title="用户" style="width: 80%;height: 80%"/>
+                                            <img th:src="@{/layuimini/images/user2.jpg}" title="用户" style="width: 80%;height: 80%"/>
                                         </div>
                                         <div id="USER_PROFILE" class="layui-col-md6 layui-anim layui-anim-scaleSpring" style="margin-top: 50px">
                                             <ul>
@@ -194,13 +194,13 @@
         </div>
     </div>
 </div>
-<script th:src="@{/layuimini/lib/layui-v2.5.4/layui.js}" charset="utf-8"></script>
+<script th:src="@{/layuimini/lib/layui-v2.5.5/layui.js}" charset="utf-8"></script>
 <script th:src="@{/layuimini/js/lay-config.js}" charset="utf-8"></script>
 <script th:inline="javascript">
     var roleId = [[${roleId}]];
 </script>
 
-<script th:src="@{/my/js/index-content.js}"></script>
+
 
 <!--
 <script>

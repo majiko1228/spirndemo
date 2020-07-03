@@ -14,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class UserServiceimpl implements UserService {
@@ -72,9 +69,15 @@ public class UserServiceimpl implements UserService {
     public Map<String, Object> initMenu() {
         ShiroUser shiroUser = (ShiroUser) SecurityUtils.getSubject().getPrincipal();
         List<Menu> menus = userMapper.getMenu(shiroUser.getRoles());
+        System.out.println(menus);
+        Map<String,Object> menuMap = new LinkedHashMap<>();
+        List<Menu> menuList = new ArrayList<>();
+        return Utils.initMenu(menus,menuList,menuMap);
+        /*
         Map<String,Object> menuMap = new LinkedHashMap<>();
         Map<String,Object> map = new HashMap<>();
 
         return Utils.initMenu(menus,menuMap,map);
+        */
     }
 }
