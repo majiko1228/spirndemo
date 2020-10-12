@@ -56,9 +56,15 @@ public class RouterController {
         return "index-content";
     }
 
-    // 跳转到课程管理表
+    // 跳转到课程管理
     @GetMapping("/teacher/courseManage")
     public String course(){
         return "teacher/course/course";
+    }
+
+    // 跳转到我的题库
+    @GetMapping("/teacher/myRepo")
+    public String myRepo(){
+        return "teacher/repo/myRepo";
     }
 }
