@@ -5,7 +5,12 @@ import cn.ndky.common.ShiroUser;
 import cn.ndky.common.Utils;
 import cn.ndky.mapper.UserMapper;
 import cn.ndky.pojo.Menu;
+import cn.ndky.pojo.User;
 import cn.ndky.service.UserService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.kotlin.KtQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -15,6 +20,8 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.util.*;
+
+import static cn.ndky.common.Page.pageSize;
 
 @Service
 public class UserServiceimpl implements UserService {
@@ -79,5 +86,18 @@ public class UserServiceimpl implements UserService {
 
         return Utils.initMenu(menus,menuMap,map);
         */
+    }
+
+
+
+    @Override
+    public RespObj getAllUser(int pageIndex,int pageSize) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper();
+
+        Page<User> page = new Page<>(pageIndex,pageSize);
+
+        IPage<User> tbUserIPage = userMapper.selectPage(page, queryWrapper);
+
+        return RespObj.build(tbUserIPage);
     }
 }

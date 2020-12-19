@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.ndky.mapper.UserMapper">
+
+    <select id="getUserByUserId" parameterType="String" resultType="User">
+        SELECT *
+        FROM tb_user
+        WHERE user_id=#{userId}
+    </select>
+
+    <select id="getRoleIdsByUserId" parameterType="String" resultType="String">
+        SELECT r.role_id
+        FROM tb_user AS u,tb_role AS r,tb_user_role AS ur
+        WHERE u.user_id = ur.user_id
+        AND r.role_id = ur.role_id
+        AND u.user_id = #{userId}
+    </select>
+
+    <select id="getRoleNamesByUserId" parameterType="String" resultType="String">
+        SELECT r.role_desc
+        FROM tb_user AS u,tb_role AS r,tb_user_role AS ur
+        WHERE u.user_id = ur.user_id
+        AND r.role_id = ur.role_id
+        AND u.user_id = #{userId}
+    </select>
+
+    <select id="getMenu" parameterType="list" resultType="Menu">
+        SELECT DISTINCT p.*
+        FROM tb_role AS r,tb_perm AS p,tb_role_perm AS rp
+        WHERE r.role_id = rp.role_id
+        AND p.perm_id = rp.perm_id
+        AND r.role_id IN
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        ORDER by p.sort
+    </select>
+
+    <update id="modifyPasswordByUserId">
+        UPDATE tb_user
+        SET password=#{password}
+        WHERE user_id=#{userId}
+    </update>
+
+    <update id="modifyUsernameByUserId">
+        UPDATE tb_user
+        SET `name` = #{username}
+        WHERE user_id = #{userId}
+    </update>
+
+    <select id="initUserTable" parameterType="java.util.Map" resultType="User">
+        SELECT u.*,r.role_desc
+        FROM tb_user AS u,tb_user_role AS ur,tb_role AS r
+        WHERE u.user_id = ur.user_id
+        AND ur.role_id = r.role_id
+        AND r.role_id != 'admin'
+        <if test="seachId != null">
+            AND u.user_id LIKE #{seachId}
+        </if>
+        <if test="seachName != null">
+            AND u.name LIKE #{seachName}
+        </if>
+        <if test="roleId != null">
+            AND r.role_id=#{roleId}
+        </if>
+        LIMIT #{page},#{limit}
+    </select>
+
+
+    <select id="initUserTableCount" parameterType="java.util.Map" resultType="int">
+        SELECT COUNT(*)
+        FROM tb_user AS u,tb_user_role AS ur,tb_role AS r
+        WHERE u.user_id = ur.user_id
+        AND ur.role_id = r.role_id
+        AND r.role_id != 'admin'
+        <if test="seachId != null">
+            AND u.user_id LIKE #{seachId}
+        </if>
+        <if test="seachName != null">
+            AND u.name LIKE #{seachName}
+        </if>
+        <if test="roleId != null">
+            AND r.role_id=#{roleId}
+        </if>
+    </select>
+
+    <delete id="deleteUserByUserId" parameterType="String">
+        DELETE
+        FROM tb_user
+        WHERE user_id=#{userId}
+    </delete>
+
+    <delete id="deleteAllUserByUserId" parameterType="java.util.ArrayList">
+        DELETE
+        FROM tb_user
+        WHERE user_id IN
+        <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+
+    <select id="getUserAndClassIdByUserId" parameterType="String" resultType="User">
+        SELECT u.*,cu.class_id
+        FROM `tb_user` AS u, tb_class_user AS cu
+        WHERE u.user_id = cu.user_id
+        AND u.user_id=#{userId}
+    </select>
+
+    <update id="updateUserStatus">
+        UPDATE tb_user
+        SET status=#{status}
+        WHERE user_id=#{userId}
+    </update>
+    
+    <update id="resetPassword">
+        UPDATE tb_user
+        SET password=#{password}
+        WHERE user_id=#{userId}
+    </update>
+
+    <delete id="deleteClassUserByUserId">
+        DELETE
+        FROM tb_class_user
+        WHERE user_id=#{userId}
+    </delete>
+    
+    <delete id="deleteUserRoleByUserId">
+        DELETE
+        FROM tb_user_role
+        WHERE user_id=#{userId}
+    </delete>
+
+    <select id="getRoleIdByUserId" resultType="String">
+        SELECT role_id
+        FROM tb_user_role
+        WHERE user_id=#{userId}
+    </select>
+
+    <insert id="addUser" parameterType="User">
+        INSERT INTO tb_user
+        (user_id,password,name,status)
+        VALUES
+        (#{userId},#{password},#{name},#{status})
+    </insert>
+
+    <insert id="addUserRole" parameterType="String">
+        INSERT INTO tb_user_role
+        (user_id,role_id)
+        VALUES
+        (#{userId},#{roleId})
+    </insert>
+</mapper>

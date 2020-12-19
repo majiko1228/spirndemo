@@ -1,0 +1,32 @@
+{
+  "groups": [
+    {
+      "name": "shiro",
+      "type": "cn.ndky.config.ShiroConfig",
+      "sourceType": "cn.ndky.config.ShiroConfig"
+    }
+  ],
+  "properties": [
+    {
+      "name": "shiro.anon-urls",
+      "type": "java.lang.String[]",
+      "sourceType": "cn.ndky.config.ShiroConfig"
+    },
+    {
+      "name": "shiro.login-url",
+      "type": "java.lang.String",
+      "sourceType": "cn.ndky.config.ShiroConfig"
+    },
+    {
+      "name": "shiro.success-url",
+      "type": "java.lang.String",
+      "sourceType": "cn.ndky.config.ShiroConfig"
+    },
+    {
+      "name": "shiro.unauthorized-url",
+      "type": "java.lang.String",
+      "sourceType": "cn.ndky.config.ShiroConfig"
+    }
+  ],
+  "hints": []
+}

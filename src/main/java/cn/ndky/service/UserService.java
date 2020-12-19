@@ -1,8 +1,10 @@
 package cn.ndky.service;
 
 import cn.ndky.common.RespObj;
+import cn.ndky.pojo.User;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Map;
 
 public interface UserService {
@@ -28,4 +30,9 @@ public interface UserService {
      * @return
      */
     public Map<String,Object> initMenu();
+
+    /**
+     * 获取用户列表
+     */
+    public RespObj getAllUser(int pageIndex,int pageSize);
 }

@@ -19,6 +19,11 @@ public class UserRealm extends AuthorizingRealm {
     @Autowired
     private UserMapper userMapper;
 
+    /**
+     * 授权
+     * @param principal
+     * @return
+     */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principal) {
         SimpleAuthorizationInfo info = null;
@@ -33,6 +38,12 @@ public class UserRealm extends AuthorizingRealm {
         return info;
     }
 
+    /**
+     * 登录认证
+     * @param token
+     * @return
+     * @throws AuthenticationException
+     */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         SimpleAuthenticationInfo info = null;
